@@ -1,7 +1,5 @@
 package com.investec.clientrestapi.util;
 
-import java.util.regex.Pattern;
-
 public class Validator {
 
     public static Boolean isIdNumberValid(String idNumber) {
