@@ -10,6 +10,7 @@ class ValidatorTest {
        assertThat(Validator.isIdNumberValid("8605065397083")).isEqualTo(true);
        assertThat(Validator.isIdNumberValid("860B065397083")).isEqualTo(false);
        assertThat(Validator.isIdNumberValid("86050653970")).isEqualTo(false);
+       assertThat(Validator.isIdNumberValid("")).isEqualTo(false);
     }
 
     @Test
