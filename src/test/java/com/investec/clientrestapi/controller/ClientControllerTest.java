@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -74,15 +75,14 @@ class ClientControllerTest {
         assertThat(expectedMessage).isEqualTo(actualMessage);
     }
     @Test
-    void givenNewClient_PostClientsEndpoint_ShouldAddNewClient2(){
+    void givenClient_updateClientsEndpoint_ShouldReturnUpdatedClient(){
+        String idNumber="8502254397083";
         String baseUrl="http://localhost:"+port+"/clients";
-        ClientDto newClient=ClientDto.builder().firstName("Talent").lastName("Mazenge").idNumber("8605065397083").mobileNumber("0733217605").physicalAddress("207 Grant Road Norwood").build();
-        ResponseEntity<ClientDto> response=testRestTemplate.postForEntity(baseUrl, newClient, ClientDto.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        ClientDto newDto=response.getBody();
-        assertThat(newDto).isNotNull();
-        assert newDto != null;
-        assertEquals(newClient.getFirstName(),newDto.getFirstName(),"Client Firstname should be the same");
+        ClientDto newClient=ClientDto.builder().firstName("Talent").lastName("Mashakada").idNumber("8605065397083").mobileNumber("0733217605").physicalAddress("20 Grant Road Norwood").build();
+        testRestTemplate.put(baseUrl+"/update/{idNumber}", newClient, Map.of("idNumber", idNumber));
+        ResponseEntity<ClientDto> response=testRestTemplate.getForEntity(baseUrl+"/idNumber/{idNumber}",ClientDto.class, Map.of("idNumber", idNumber));
+        assertNotNull(response.getBody());
+        assertThat(newClient.getLastName()).isEqualTo(response.getBody().getLastName());
     }
 
     @Test
@@ -95,7 +95,7 @@ class ClientControllerTest {
         String expectedMessage = "8502254397083";
         String actualMessage = response.getBody().getIdNumber();
         assertThat(expectedMessage).isEqualTo(actualMessage);
-      //  assertThat(Objects.requireNonNull(response.getBody()).isGreaterThanOrEqualTo(3);
+
     }
 
 }
