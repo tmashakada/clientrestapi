@@ -11,9 +11,9 @@ public class ClientExceptionHandler {
     public final ResponseEntity<String> invalidIdHandler(InvalidIdNumberException ex) {
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler(DupilcateMobileNumberException.class)
-    public final ResponseEntity<String> dupilcateMobileNumberHandler(DupilcateMobileNumberException ex) {
-        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.CONFLICT);
+    @ExceptionHandler(DuplicateRecordException.class)
+    public final ResponseEntity<String> dupilcateMobileNumberHandler(DuplicateRecordException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
     @ExceptionHandler(MandotoryFieldsException.class)
     public final ResponseEntity<String> mandotoryFieldsHandler(MandotoryFieldsException ex) {

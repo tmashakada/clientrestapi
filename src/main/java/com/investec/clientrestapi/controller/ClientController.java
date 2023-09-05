@@ -1,11 +1,9 @@
 package com.investec.clientrestapi.controller;
 
-import com.investec.clientrestapi.dao.ClientDao;
 import com.investec.clientrestapi.dto.ClientDto;
 import com.investec.clientrestapi.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,7 +1,6 @@
 package com.investec.clientrestapi.controller;
 
 import com.investec.clientrestapi.dto.ClientDto;
-import com.investec.clientrestapi.exception.InvalidIdNumberException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,7 +13,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @SpringBootTest(webEnvironment = RANDOM_PORT)
@@ -74,6 +73,7 @@ class ClientControllerTest {
         String actualMessage = Objects.requireNonNull(response.getBody()).toString();
         assertThat(expectedMessage).isEqualTo(actualMessage);
     }
+    @Test
     void givenNewClient_PostClientsEndpoint_ShouldAddNewClient2(){
         String baseUrl="http://localhost:"+port+"/clients";
         ClientDto newClient=ClientDto.builder().firstName("Talent").lastName("Mazenge").idNumber("8605065397083").mobileNumber("0733217605").physicalAddress("207 Grant Road Norwood").build();

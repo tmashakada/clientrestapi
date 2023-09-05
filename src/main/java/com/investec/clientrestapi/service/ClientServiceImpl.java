@@ -3,8 +3,7 @@ package com.investec.clientrestapi.service;
 import com.investec.clientrestapi.dao.ClientDao;
 import com.investec.clientrestapi.dto.ClientDto;
 import com.investec.clientrestapi.exception.ClientNotFoundException;
-import com.investec.clientrestapi.exception.DupilcateMobileNumberException;
-
+import com.investec.clientrestapi.exception.DuplicateRecordException;
 import com.investec.clientrestapi.exception.InvalidIdNumberException;
 import com.investec.clientrestapi.exception.MandotoryFieldsException;
 import com.investec.clientrestapi.util.Validator;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 
@@ -53,13 +51,13 @@ public class ClientServiceImpl implements ClientService{
         if(client.getMobileNumber()!=null) {
             if (clientDto.getMobileNumber() == null) {
                 if (isMobileNumberExist(client.getMobileNumber())){
-                   throw new DupilcateMobileNumberException("Duplicate Mobile Number")  ;
+                   throw new DuplicateRecordException("Duplicate Mobile Number")  ;
                 }
                 clientDto.setMobileNumber(client.getMobileNumber());
             }else{
                 if (!client.getMobileNumber().equals(clientDto.getMobileNumber())) {
                     if (isMobileNumberExist(client.getMobileNumber())){
-                        throw new DupilcateMobileNumberException("Duplicate Mobile Number");
+                        throw new DuplicateRecordException("Duplicate Mobile Number");
                     }
                     clientDto.setMobileNumber(client.getMobileNumber());
                 }
@@ -87,9 +85,12 @@ public class ClientServiceImpl implements ClientService{
         if(!Validator.isIdNumberValid(clientDto.getIdNumber())){
             throw  new InvalidIdNumberException("ID Number is NOT valid");
         }
+        if(isIdNumberExist(clientDto.getIdNumber())){
+            throw  new DuplicateRecordException("Duplicate ID Number");
+        }
 
         if(isMobileNumberExist(clientDto.getMobileNumber())){
-            throw  new DupilcateMobileNumberException("Duplicate Mobile Number");
+            throw  new DuplicateRecordException("Duplicate Mobile Number");
         }
 
     }
