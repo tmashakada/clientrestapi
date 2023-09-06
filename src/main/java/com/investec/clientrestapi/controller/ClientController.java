@@ -30,4 +30,12 @@ public class ClientController {
     public ResponseEntity<ClientDto>  getClientByIdNumber(@PathVariable String idNumber){
           return  ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByIdNumber(idNumber));
     }
+    @GetMapping("/clients/firstname/{firstName}")
+    public ResponseEntity<List<ClientDto>> getClientByFirstName(@PathVariable String firstName){
+        return  ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByFirstName(firstName));
+    }
+    @GetMapping("/clients/mobilenumber/{mobileNumber}")
+    public ResponseEntity<ClientDto>  getClientByMobileNumber(@PathVariable String mobileNumber){
+        return  ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByMobileNumber(mobileNumber));
+    }
 }

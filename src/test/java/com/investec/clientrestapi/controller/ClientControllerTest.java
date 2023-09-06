@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -84,6 +84,18 @@ class ClientControllerTest {
         assertNotNull(response.getBody());
         assertThat(newClient.getLastName()).isEqualTo(response.getBody().getLastName());
     }
+
+    @Test
+    void givenClient_updateClientsEndpoint_ShouldReturnUpdatedClient2(){
+        String idNumber="8502254397083";
+        String baseUrl="http://localhost:"+port+"/clients";
+        ClientDto newClient=ClientDto.builder().firstName("Talent").lastName("Mashakada").idNumber("8605065397083").mobileNumber("0833217607").physicalAddress("20 Grant Road Norwood").build();
+        testRestTemplate.put(baseUrl+"/update/{idNumber}", newClient, Map.of("idNumber", idNumber));
+        ResponseEntity<ClientDto> response=testRestTemplate.getForEntity(baseUrl+"/idNumber/{idNumber}",ClientDto.class, Map.of("idNumber", idNumber));
+        assertNotNull(response.getBody());
+        assertThat(newClient.getLastName()).isEqualTo("Mashakada");
+    }
+
 
     @Test
     void givenClientIdNumber_GetClientEndpoint_ShouldReturnClient(){
