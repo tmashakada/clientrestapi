@@ -1,6 +1,7 @@
 package com.investec.clientrestapi.controller;
 
 import com.investec.clientrestapi.dto.ClientDto;
+import com.investec.clientrestapi.exception.ClientNotFoundException;
 import com.investec.clientrestapi.service.ClientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,11 @@ public class ClientController {
    }
     @GetMapping("/clients/idNumber/{idNumber}")
     public ResponseEntity<ClientDto>  getClientByIdNumber(@PathVariable String idNumber){
-          return  ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByIdNumber(idNumber));
+        ClientDto clientDto = clientService.getClientByIdNumber(idNumber);
+        if(clientDto==null){
+            throw  new ClientNotFoundException("Client Not Found");
+        }
+       return  ResponseEntity.status(HttpStatus.OK).body(clientDto);
     }
     @GetMapping("/clients/firstname/{firstName}")
     public ResponseEntity<List<ClientDto>> getClientByFirstName(@PathVariable String firstName){
@@ -36,6 +41,11 @@ public class ClientController {
     }
     @GetMapping("/clients/mobilenumber/{mobileNumber}")
     public ResponseEntity<ClientDto>  getClientByMobileNumber(@PathVariable String mobileNumber){
-        return  ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByMobileNumber(mobileNumber));
+       ClientDto clientDto= clientService.getClientByMobileNumber(mobileNumber);
+       if(clientDto==null){
+            throw  new ClientNotFoundException("Client Not Found");
+       }
+
+       return  ResponseEntity.status(HttpStatus.OK).body(clientService.getClientByMobileNumber(mobileNumber));
     }
 }

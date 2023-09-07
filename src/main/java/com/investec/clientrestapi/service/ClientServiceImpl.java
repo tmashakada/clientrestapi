@@ -23,7 +23,7 @@ public class ClientServiceImpl implements ClientService{
     public ClientDto addClient(ClientDto clientDto) {
          checkMondatoryFields(clientDto);
          validateData(clientDto);
-        return clientDao.addClient(clientDto);
+         return clientDao.addClient(clientDto);
     }
 
 
@@ -76,6 +76,7 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public ClientDto getClientByMobileNumber(String mobileNumber) {
+
       return   getClients().stream()
                 .filter( clientDto -> clientDto.getMobileNumber().equals(mobileNumber)).findFirst().orElse(null);
 
@@ -92,6 +93,7 @@ public class ClientServiceImpl implements ClientService{
         if(isMobileNumberExist(clientDto.getMobileNumber())){
             throw  new DuplicateRecordException("Duplicate Mobile Number");
         }
+
 
     }
     private void checkMondatoryFields(ClientDto clientDto){

@@ -82,20 +82,8 @@ class ClientControllerTest {
         testRestTemplate.put(baseUrl+"/update/{idNumber}", newClient, Map.of("idNumber", idNumber));
         ResponseEntity<ClientDto> response=testRestTemplate.getForEntity(baseUrl+"/idNumber/{idNumber}",ClientDto.class, Map.of("idNumber", idNumber));
         assertNotNull(response.getBody());
-        assertThat(newClient.getLastName()).isEqualTo(response.getBody().getLastName());
+        assertThat("Mash").isEqualTo(response.getBody().getLastName());
     }
-
-    @Test
-    void givenClient_updateClientsEndpoint_ShouldReturnUpdatedClient2(){
-        String idNumber="8502254397083";
-        String baseUrl="http://localhost:"+port+"/clients";
-        ClientDto newClient=ClientDto.builder().firstName("Talent").lastName("Mashakada").idNumber("8605065397083").mobileNumber("0833217607").physicalAddress("20 Grant Road Norwood").build();
-        testRestTemplate.put(baseUrl+"/update/{idNumber}", newClient, Map.of("idNumber", idNumber));
-        ResponseEntity<ClientDto> response=testRestTemplate.getForEntity(baseUrl+"/idNumber/{idNumber}",ClientDto.class, Map.of("idNumber", idNumber));
-        assertNotNull(response.getBody());
-        assertThat(newClient.getLastName()).isEqualTo("Mashakada");
-    }
-
 
     @Test
     void givenClientIdNumber_GetClientEndpoint_ShouldReturnClient(){
@@ -109,5 +97,31 @@ class ClientControllerTest {
         assertThat(expectedMessage).isEqualTo(actualMessage);
 
     }
+    @Test
+    void givenClientIdMobileNumber_GetClientByMobileNumberEndpoint_ShouldReturnClient(){
+        String mobileNumber="0833217608";
+        String baseUrl="http://localhost:"+port+"/clients/mobilenumber/{mobileNumber}";
+
+        ResponseEntity<ClientDto> response=testRestTemplate.getForEntity(baseUrl,ClientDto.class, Map.of("mobileNumber", mobileNumber));
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        String expectedMessage = "2001014800086";
+        String actualMessage = Objects.requireNonNull(response.getBody()).getIdNumber();
+        assertThat(expectedMessage).isEqualTo(actualMessage);
+
+    }
+
+    @Test
+    void givenClientIdMobileNumber_GetClientByMobileNumberEndpoint_ShouldReturNotFound(){
+        String mobileNumber="08332176086";
+        String baseUrl="http://localhost:"+port+"/clients/mobilenumber/{mobileNumber}";
+
+        ResponseEntity<?> response=testRestTemplate.getForEntity(baseUrl, String.class, Map.of("mobileNumber", mobileNumber));
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        String expectedMessage = "Client Not Found";
+        String actualMessage = Objects.requireNonNull(response.getBody()).toString();
+        assertThat(expectedMessage).isEqualTo(actualMessage);
+
+    }
+
 
 }

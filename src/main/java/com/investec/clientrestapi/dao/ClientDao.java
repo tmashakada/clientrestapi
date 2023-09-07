@@ -11,7 +11,7 @@ public class ClientDao {
     static  int id=100;
 
   private final List<ClientDto> clientsList=new ArrayList<>();
-    public ClientDao() {
+    public ClientDao() {//8502254397083
         clientsList.add(ClientDto.builder().id(createAndGetId()).firstName("Tafadzwa").lastName("Mash").idNumber("8502254397083").mobileNumber("0833217605").physicalAddress("201 Grant Road Norwood").build());
         clientsList.add(ClientDto.builder().id(createAndGetId()).firstName("Emmanuel").lastName("Mashakada").idNumber("8003145497083").mobileNumber("0833217607").physicalAddress("207 Grant Road Norwood").build());
         clientsList.add(ClientDto.builder().id(createAndGetId()).firstName("Lesley").lastName("Madiba").idNumber("2001014800086").mobileNumber("0833217608").physicalAddress("208 Grant Road Norwood").build())  ;
