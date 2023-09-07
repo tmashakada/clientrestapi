@@ -16,13 +16,13 @@ public class ClientExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
     @ExceptionHandler(MandotoryFieldsException.class)
-    public final ResponseEntity<String> mandotoryFieldsHandler(MandotoryFieldsException ex) {
-        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public final ResponseEntity<?> mandotoryFieldsHandler(MandotoryFieldsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ClientNotFoundException.class)
     public final ResponseEntity<String> clientNotFoundHandler(ClientNotFoundException ex) {
-        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 }

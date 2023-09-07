@@ -7,8 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+
 
 import java.util.*;
 
@@ -93,7 +92,7 @@ class ClientControllerTest {
         ResponseEntity<ClientDto> response=testRestTemplate.getForEntity(baseUrl,ClientDto.class, Map.of("idNumber", idNumber));
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         String expectedMessage = "8502254397083";
-        String actualMessage = response.getBody().getIdNumber();
+        String actualMessage = Objects.requireNonNull(response.getBody()).getIdNumber();
         assertThat(expectedMessage).isEqualTo(actualMessage);
 
     }
