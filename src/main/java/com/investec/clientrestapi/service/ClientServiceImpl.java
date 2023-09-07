@@ -43,7 +43,7 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientDto updateClient(ClientDto client, String idNumber) {
         checkMondatoryFields(client);
-        validateData(client);
+
         ClientDto clientDto = Optional.ofNullable(getClientByIdNumber(idNumber)).orElseThrow(() -> new ClientNotFoundException("Client Does not exist for the given ID Number"));
         if (client.getMobileNumber() != null) {
             if (clientDto.getMobileNumber() == null) {

@@ -41,6 +41,10 @@ class ClientControllerTest {
         assertThat(newDto).isNotNull();
         assert newDto != null;
         assertEquals(newClient.getFirstName(), newDto.getFirstName(), "Client Firstname should be the same");
+        ResponseEntity<ClientDto[]> responseList = testRestTemplate.getForEntity(baseUrl, ClientDto[].class);
+        assertThat(responseList.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(Objects.requireNonNull(responseList.getBody()).length).isGreaterThanOrEqualTo(4);
+
     }
 
     @Test
